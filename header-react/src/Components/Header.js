@@ -1,8 +1,13 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { supabase } from "../services/supabaseClient";
 
 // Componente funcional Header
-const Header = () => {
+const Header = ({user}) => {
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
   return(
     <Container>
     
@@ -11,7 +16,7 @@ const Header = () => {
           
       {/* Logo */}
       <Logo to="/">
-        <img src="/images/Tree.png" alt="Logo" />
+        <img src="/images/Logo.png" alt="Logo" />
       </Logo>
 
 
@@ -22,12 +27,52 @@ const Header = () => {
         <StyledLink to="/produtos">
           <span>Produtos</span>
         </StyledLink>
+
+        { user && (
+          <>
+          <StyledLink to="/favoritos">
+          <span>Favoritos</span>
+        </StyledLink>
+
+        <StyledLink to="/carrinho">
+          <span>Carrinho</span>
+        </StyledLink>
+          </>
+        )}
+
+
+        
       </NavMenu>
 
 
       {/* Botão de login */}
-      <Login to="/login">Login</Login>
+      
+      {user ? (
+        <Login onClick={async () => {
+          await supabase.auth.signOut();
+          navigate("/login");
+        }}
+        >Sair</Login>
+      ): (
+        <Login to="/login">Login</Login>
+      )}
+  
 
+      <Hamburger onClick={() => setIsOpen(!isOpen)}>
+  <span />
+  <span />
+  <span />
+</Hamburger>
+
+<MobileMenu open={isOpen}>
+  <MobileLink to="/" onClick={() => setIsOpen(false)}>Home</MobileLink>
+  <MobileLink to="/produtos" onClick={() => setIsOpen(false)}>Produtos</MobileLink>
+  <MobileLink to="/login" onClick={() => setIsOpen(false)}>Login</MobileLink>
+</MobileMenu>
+
+{isOpen && <Overlay onClick={() => setIsOpen(false)} />}
+
+  
     </Container>
   );
 };
@@ -115,14 +160,14 @@ const NavMenu = styled.div`
   height: 100%;
   margin-left: 30px;
 
-  @media (max-width: 548px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
 // Login também como Link
 const Login = styled(Link)`
-  color: #ffffff;
+    color: #ffffff;
   background-color: #0D0D0D;
   padding: 10px 16px;
   margin-right: 45px;
@@ -132,12 +177,73 @@ const Login = styled(Link)`
   border-radius: 4px;
   transition: all 0.2s ease;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     background-color: #f9f9f9;
     color: #0D0D0D;
     border-color: transparent;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
 `;
+
+const Hamburger = styled.div`
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1100;
+
+  span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+const MobileMenu = styled.div`
+  position: fixed;
+  top: 0;
+  right: ${({ open }) => (open ? "0" : "-100%")};
+  width: 250px;
+  height: 100vh;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  padding: 120px 30px;
+  gap: 30px;
+  transition: 0.3s ease;
+  z-index: 1050;
+`;
+
+const MobileLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: "Space Grotesk";
+  transition: 0.3s;
+
+  &:hover {
+    color: #7C3AED;
+  }
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+`;
+
+
 
 export default Header;

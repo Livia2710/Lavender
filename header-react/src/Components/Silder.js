@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Headfone from "../Assets/Imagens/Headfone_preto.png";
-import Notebook from "../Assets/Imagens/Notebook.png";
+import Headfone from "../Assets/Imagens/Headfone.png";
+import Notebook from "../Assets/Imagens/Notebook_preto.png";
 import Celulares from "../Assets/Imagens/celulares.png"
 
 
@@ -71,52 +71,91 @@ const Container = styled.section`
   background: #0D0D0D;
   width: 100%;
   margin-top: 5rem;
+  padding: 5rem;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 3rem 20px;
+    gap: 40px;
+  }
 `;
+
 
 const Content = styled.div`
-
   opacity: ${({ fade }) => (fade ? 1 : 0)};
-  transform: ${({ fade }) => (fade ? "translateY(0)" : "translateY(20px)")};
+  transform: ${({ fade }) =>
+    fade ? "translateY(0)" : "translateY(20px)"};
   transition: all 0.4s ease;
-    padding: 100px ;
+  padding: 100px;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `;
+
 
 const Title = styled.h1`
   font-size: 42px;
   margin-bottom: 20px;
   font-family: 'Space Grotesk', sans-serif;
   color: #ffff;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 const Description = styled.p`
   font-size: 18px;
   color: #A1A1AA;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
+
 const Button = styled.button`
-  background: #7C3AED;
+   padding: 14px 40px;
+  background: linear-gradient(90deg, #7C3AED, #9333EA);
   border: none;
-  padding: 12px 24px;
+  border-radius: 8px;
   color: white;
-  border-radius: 2px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
+  transition: 0.3s ease;
 
   &:hover {
-    background: #6D28D9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
   }
 `;
 
 const ImageWrapper = styled.div`
   opacity: ${({ fade }) => (fade ? 1 : 0)};
-  transform: ${({ fade }) => (fade ? "translateX(0)" : "translateX(20px)")};
+  transform: ${({ fade }) =>
+    fade ? "translateX(0)" : "translateX(20px)"};
+  filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.5));
   transition: all 0.4s ease;
+  margin-right: 5%;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+  }
 `;
 
+
 const ProductImage = styled.img`
-  width: 450px;
-  height: 450px;
+  width: 580px;
+  height: 580px;
   object-fit: contain;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
 `;
