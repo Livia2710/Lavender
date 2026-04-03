@@ -14,10 +14,10 @@ O usuário pode navegar pelos produtos livremente e realizar ações como adicio
 ##  Preview
 
 ### Home
-![Home](./preview/home.png)
+![Home](./preview/Home.png)
 
 ### Produtos
-![Produtos](./preview/produtos.png)
+![Produtos](./preview/Produtos.png)
 
 ---
 
