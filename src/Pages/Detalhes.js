@@ -114,7 +114,9 @@ const ProductDetail = () => {
      <>
     <Container>
       <ImageSection>
+      <ImageWrapper>
         <ProductImage src={product.imagem_url} />
+        </ImageWrapper>
       </ImageSection>
 
       <InfoSection>
@@ -182,9 +184,9 @@ export default ProductDetail;
 const Container = styled.div`
   display: flex;
   gap: 80px;
-  ppadding: 100px 100px 60px 100px;
+  padding: 100px 100px 60px 100px;
   background: #0D0D0D;
-  align-items: flez=x-start;
+  align-items: flex-start;
 `;
 const ImageSection = styled.div`
   flex: 1;
@@ -192,8 +194,18 @@ const ImageSection = styled.div`
   justify-content: center;
   align-items: flex-start;
 `;
+const ImageWrapper = styled.div`
+  width:450px;
+  height:450px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`;
 const ProductImage = styled.img`
-  width: 500px;
+  max-width: 400px;
+  max-height: 400px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 `;
 const InfoSection = styled.div`
